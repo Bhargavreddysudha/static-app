@@ -1,0 +1,16 @@
+pipeline {
+    agent any 
+    stages {
+        stage("build"){
+            steps {
+                script {
+            sh """
+            aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 315073111691.dkr.ecr.eu-west-3.amazonaws.com
+            sudo docker build -t 315073111691.dkr.ecr.eu-west-3.amazonaws.com/static-app:latest .
+            docker push 315073111691.dkr.ecr.eu-west-3.amazonaws.com/static-app:latest
+            """
+        }
+         }
+    }
+}
+}
